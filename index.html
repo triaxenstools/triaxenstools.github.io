@@ -323,6 +323,10 @@
       font-weight: 600;
     }
 
+    .kofi-wrap {
+      margin-top: 12px;
+    }
+
     /* ==========================================================================
        Narrow screens
        ========================================================================== */
@@ -868,9 +872,9 @@
       <div>
         <label for="ladder-opponent-nature-select">Custom column: nature</label>
         <select id="ladder-opponent-nature-select">
-          <option value="boosting">+Speed (Jolly, Timid)</option>
+          <option value="boosting">+Speed</option>
           <option value="neutral">Neutral</option>
-          <option value="hindering">−Speed (Brave, Quiet)</option>
+          <option value="hindering">-Speed</option>
         </select>
       </div>
       <div>
@@ -910,7 +914,7 @@
             <dt>No investment</dt>
             <dd>0 Speed points with a neutral nature</dd>
             <dt>Min</dt>
-            <dd>0 Speed points with a −Speed nature</dd>
+            <dd>0 Speed points with a -Speed nature</dd>
             <dt>Scarf Max+</dt>
             <dd>Max+ with a Choice Scarf (×1.5)</dd>
             <dt>Scarf Max</dt>
@@ -953,6 +957,9 @@
   <footer class="site-footer page-container">
     <p><strong>Fan-made tool.</strong> Not affiliated with Nintendo, Game Freak, Creatures or The Pokémon Company. Pokémon names are trademarks of their owners.</p>
     <p>Roster: Regulation M-C legal list. Base stats: <a href="https://pokeapi.co/">PokeAPI</a>.</p>
+    <div class="kofi-wrap">
+      <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support me on Ko-fi', '#72a4f2', 'U7R72AN2XO');kofiwidget2.draw();</script>
+    </div>
   </footer>
 
   <script>
@@ -1339,7 +1346,7 @@
       { label: "+1 Speed",          numerator: 3, denominator: 2 },
       { label: "+2 Speed",          numerator: 2, denominator: 1 },
       { label: "Paralyzed",         numerator: 1, denominator: 2 },
-      { label: "Icy Wind / −1",     numerator: 2, denominator: 3 },
+      { label: "Icy Wind / -1",     numerator: 2, denominator: 3 },
       { label: "Scarf + Tailwind",  numerator: 3, denominator: 1, usesChoiceScarf: true },
       { label: "Speed doubling abilities", numerator: 2, denominator: 1 },
     ];
