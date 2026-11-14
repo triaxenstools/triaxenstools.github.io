@@ -13,7 +13,7 @@ A fast, single-page Speed tier calculator for **Pokémon Champions (Regulation M
   - Min (0 Speed points, -Speed nature)
   - Scarf Max+ / Scarf Max (Choice Scarf ×1.5)
   - **Custom**: set your own Speed points, nature, and modifier
-- **Trick Room mode**: flips the ladder so the slowest Pokémon come first, with an animated row-flip and sound effect (respects `prefers-reduced-motion`)
+- **Trick Room mode**: flips the ladder so the slowest Pokémon come first
 - **Search and filter**: find a Pokémon or type, and filter by Standard or Mega forms
 
 This is a fan-made tool. It is not affiliated with Nintendo, Game Freak, Creatures, or The Pokémon Company. Pokémon names are trademarks of their respective owners.
