@@ -12,7 +12,7 @@
 
   <style>
     /* ==========================================================================
-       color theory and topography
+       Colour and typography
        ========================================================================== */
     :root {
       --color-page-background: #eef2f7;
@@ -20,7 +20,7 @@
       --color-surface-subtle: #f6f8fb;
       --color-text: #14213d;
       --color-text-muted: #5b6679;
-      --color-text-disabled: #9aa5b8;
+      --color-text-disabled: #6b7689;
       --color-border: #d5dce8;
       --color-border-subtle: #e8edf4;
       --color-accent: #0e7c86;
@@ -29,6 +29,12 @@
 
       --font-heading: "Barlow Condensed", "Arial Narrow", sans-serif;
       --font-body: "Source Sans 3", system-ui, sans-serif;
+
+      /* Type roles: body, labels (controls, captions), meta (dense table and note text), micro (secondary tags) */
+      --text-body: 1rem;
+      --text-label: 0.875rem;
+      --text-meta: 0.8125rem;
+      --text-micro: 0.75rem;
 
       color-scheme: light;
     }
@@ -44,13 +50,13 @@
       margin: 0;
       background: var(--color-page-background);
       color: var(--color-text);
-      font: 16px/1.5 var(--font-body);
+      font: var(--text-body)/1.5 var(--font-body);
     }
 
-    h1,
-    h2 {
+    h1 {
       font-family: var(--font-heading);
-      letter-spacing: 0.2px;
+      letter-spacing: 0.01em;
+      text-wrap: balance;
     }
 
     .page-container {
@@ -62,7 +68,7 @@
     /* Keyboard focus ring shared by every interactive control */
     input:focus-visible,
     select:focus-visible,
-    th:focus-visible {
+    button:focus-visible {
       outline: 3px solid var(--color-focus);
       outline-offset: 2px;
     }
@@ -92,19 +98,20 @@
       padding-left: 14px;
       border-left: 1px solid rgba(159, 179, 209, 0.35);
       color: #9fb3d1;
-      font-size: 14px;
+      font-size: var(--text-label);
     }
 
     .page-title {
       margin: 26px 0 8px;
-      font-size: clamp(30px, 5vw, 46px);
+      font-size: clamp(1.875rem, 5vw, 2.875rem);
       line-height: 1.05;
     }
 
     .page-intro {
-      max-width: 80ch;
+      max-width: 70ch;
       margin: 0 0 18px;
       color: var(--color-text-muted);
+      text-wrap: pretty;
     }
 
     /* ==========================================================================
@@ -121,18 +128,19 @@
     }
 
     .panel label {
-      font-size: 14px;
+      font-size: var(--text-label);
       font-weight: 600;
       color: var(--color-text-muted);
     }
 
-    /* Reserves a line of height so the panel doesn't jump when the note appears */
+    /* Sits on the label row so it never adds height to the panel */
     .effective-speed-note {
-      display: block;
-      min-height: 20px;
-      margin-top: 4px;
-      font-size: 13px;
+      position: absolute;
+      top: 3px;
+      right: 0;
+      font-size: var(--text-meta);
       color: var(--color-text-muted);
+      white-space: nowrap;
     }
 
     /* ==========================================================================
@@ -142,12 +150,17 @@
       display: grid;
       grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
       gap: 12px;
+      align-items: end;
       margin-bottom: 12px;
+    }
+
+    .filters {
+      margin-top: 12px;
     }
 
     .filters label {
       display: block;
-      font-size: 13px;
+      font-size: var(--text-label);
       font-weight: 600;
       color: var(--color-text-muted);
     }
@@ -168,13 +181,14 @@
        Declared after the shared field rule above so it overrides it. */
     input.your-speed-input {
       display: block;
-      margin-top: 2px;
+      margin-top: 0;
       padding: 0;
       border: 0;
       border-bottom: 3px solid var(--color-accent);
       border-radius: 0;
       background: transparent;
-      font: 700 48px/1.05 var(--font-heading);
+      font: 700 3rem/1.05 var(--font-heading);
+      font-variant-numeric: tabular-nums;
     }
 
     /* ==========================================================================
@@ -182,7 +196,7 @@
        ========================================================================== */
     .table-info {
       margin: 6px 0;
-      font-size: 14px;
+      font-size: var(--text-label);
       color: var(--color-text-muted);
     }
 
@@ -198,119 +212,14 @@
     }
 
     /* ==========================================================================
-       Method explanation and footer
+       Footer
        ========================================================================== */
-    .method {
-      margin: 32px 0 8px;
-    }
-
-    .method h2 {
-      margin: 0 0 4px;
-      font-size: 30px;
-    }
-
-    .method__lead {
-      max-width: 70ch;
-      margin: 0 0 16px;
-      color: var(--color-text-muted);
-    }
-
-    .method__grid {
-      display: grid;
-      grid-template-columns: 3fr 2fr;
-      gap: 14px;
-      align-items: start;
-    }
-
-    .method-card {
-      padding: 16px 18px;
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: 10px;
-    }
-
-    .method-card h3 {
-      margin: 0 0 12px;
-      font: 700 14px var(--font-body);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-    }
-
-    /* Column glossary: term on the left, description on the right */
-    .column-list {
-      display: grid;
-      grid-template-columns: max-content 1fr;
-      gap: 0;
-      margin: 0;
-    }
-
-    .column-list dt,
-    .column-list dd {
-      margin: 0;
-      padding: 9px 0;
-      border-top: 1px solid var(--color-border-subtle);
-    }
-
-    .column-list dt:first-of-type,
-    .column-list dt:first-of-type + dd {
-      border-top: 0;
-      padding-top: 0;
-    }
-
-    .column-list dt {
-      padding-right: 18px;
-      font-weight: 700;
-      color: var(--color-text);
-    }
-
-    .column-list dd {
-      color: var(--color-text-muted);
-    }
-
-    /* Colour legend */
-    .legend {
-      display: grid;
-      gap: 10px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .legend li {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
-
-    .legend__swatch {
-      flex: none;
-      width: 34px;
-      height: 24px;
-      margin-top: 2px;
-      border: 1px solid var(--color-border);
-      border-radius: 5px;
-      background: var(--color-surface);
-    }
-
-    .legend__swatch--outspeed { background: rgba(30, 138, 76, 0.30); border-color: rgba(30, 138, 76, 0.55); }
-    .legend__swatch--tie      { background: rgba(181, 121, 0, 0.36); border-color: rgba(181, 121, 0, 0.6); }
-
-    .legend strong {
-      display: block;
-      color: var(--color-text);
-    }
-
-    .legend span.legend__text {
-      color: var(--color-text-muted);
-    }
-
     .site-footer {
       max-width: 1180px;
       margin: 36px auto 28px;
       padding-top: 18px;
       background: linear-gradient(var(--color-border), var(--color-border)) 16px 0 / calc(100% - 32px) 1px no-repeat;
-      font-size: 14px;
+      font-size: var(--text-label);
       color: var(--color-text-muted);
     }
 
@@ -342,26 +251,32 @@
     }
 
     /* ==========================================================================
-       Tabs
-       ========================================================================== */
-    .ladder-jump-button:focus-visible {
-      outline: 3px solid var(--color-focus);
-      outline-offset: 2px;
-    }
-
-    /* ==========================================================================
        Speed ladder
        ========================================================================== */
     .ladder-controls {
       display: flex;
       flex-wrap: wrap;
-      align-items: flex-end;
+      align-items: flex-start;
       gap: 16px;
     }
 
+    /* Buttons have no label, so they start where the other controls start (below a label line) */
+    @media (min-width: 601px) {
+      .ladder-controls__field:has(> button) {
+        padding-top: calc(var(--text-label) * 1.5 + 3px);
+      }
+    }
+
     .ladder-controls__field {
+      position: relative;
       flex: 1 1 150px;
       min-width: 150px;
+    }
+
+    /* Wide enough that the "Effective Speed" note fits beside the label */
+    .ladder-controls__field--modifier {
+      flex: 1.6 1 230px;
+      min-width: 230px;
     }
 
     .ladder-jump-button {
@@ -370,7 +285,7 @@
       border-radius: 6px;
       background: var(--color-accent);
       color: #ffffff;
-      font: 600 15px var(--font-body);
+      font: 600 0.9375rem var(--font-body);
       cursor: pointer;
     }
 
@@ -394,7 +309,7 @@
       z-index: 1;
       background: var(--color-surface-subtle);
       color: var(--color-text-muted);
-      font-size: 13px;
+      font-size: var(--text-meta);
     }
 
     /* The base Speed label that starts each ladder row */
@@ -402,7 +317,7 @@
       width: 64px;
       background: var(--color-surface-subtle);
       color: var(--color-text);
-      font: 700 22px var(--font-heading);
+      font: 700 1.375rem var(--font-heading);
       text-align: center;
     }
 
@@ -418,7 +333,7 @@
       border: 1px solid var(--color-border);
       border-radius: 999px;
       background: var(--color-surface);
-      font-size: 13px;
+      font-size: var(--text-meta);
       white-space: nowrap;
     }
 
@@ -426,7 +341,7 @@
     .ladder-chip__type {
       margin-left: 4px;
       color: var(--color-text-muted);
-      font-size: 11px;
+      font-size: var(--text-micro);
     }
 
     .ladder-chip--mega {
@@ -447,37 +362,11 @@
     }
 
     .ladder-you-row th {
-      font-size: 16px;
+      font-size: var(--text-body);
     }
 
     .ladder-you-row td.ladder-members {
       font-weight: 400;
-    }
-
-    /* ==========================================================================
-       Horizontal scroll slider (shown above a table that is wider than the screen)
-       ========================================================================== */
-    .table-slider-bar {
-      position: sticky;
-      top: 0;
-      z-index: 5;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 6px 0;
-      background: var(--color-page-background);
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--color-text-muted);
-    }
-
-    .table-slider-bar[hidden] {
-      display: none;
-    }
-
-    .table-slider-bar input {
-      flex: 1;
-      accent-color: var(--color-accent);
     }
 
     /* ==========================================================================
@@ -525,7 +414,7 @@
 
       .ladder-table tbody th[data-label]::before {
         content: attr(data-label) " ";
-        font: 600 14px var(--font-body);
+        font: 600 var(--text-label) var(--font-body);
         color: var(--color-text-muted);
       }
 
@@ -538,13 +427,15 @@
       .ladder-chip {
         display: block;
         width: fit-content;
+        max-width: 100%;
         margin: 3px 0;
+        white-space: normal;
       }
 
       .ladder-table td[data-label]::before {
         content: attr(data-label);
         display: block;
-        font-size: 12px;
+        font-size: var(--text-meta);
         font-weight: 600;
         color: var(--color-text-muted);
       }
@@ -569,11 +460,8 @@
     }
 
     /* ==========================================================================
-       Trick Room jippi
+       Trick Room
        ========================================================================== */
-    .when-trick-room { display: none; }
-    body.trick-room .when-trick-room { display: inline; }
-    body.trick-room .when-normal { display: none; }
 
     body { transition: background-color 0.6s ease; overflow-anchor: none; }
 
@@ -595,18 +483,13 @@
       border-radius: 6px;
       background: #ffffff;
       color: #a3389a;
-      font: 600 15px var(--font-body);
+      font: 600 0.9375rem var(--font-body);
       cursor: pointer;
       transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
     }
 
     .trick-room-button:hover {
       background: #faf0f8;
-    }
-
-    .trick-room-button:focus-visible {
-      outline: 3px solid var(--color-focus);
-      outline-offset: 2px;
     }
 
     .trick-room-button[aria-pressed="true"] {
@@ -625,7 +508,7 @@
       border-radius: 999px;
       background: #d45cc0;
       color: #2a0a26;
-      font: 700 12px var(--font-body);
+      font: 600 var(--text-micro) var(--font-body);
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
@@ -664,13 +547,14 @@
       body { transition: none; }
     }
 
-    @media (max-width: 800px) {
-      .method__grid { grid-template-columns: 1fr; }
-    }
-
     /* Phones: the two buttons sit under each other at the same width */
     @media (max-width: 600px) {
       .ladder-controls { gap: 12px; }
+
+      /* No room beside the label on a phone, so the note drops under the dropdown, only while it has text */
+      .ladder-controls__field--modifier { flex: 1 1 150px; min-width: 150px; }
+      .effective-speed-note { position: static; display: block; margin-top: 4px; }
+      .effective-speed-note:empty { display: none; }
       .ladder-jump-button,
       .trick-room-button {
         display: flex;
@@ -678,7 +562,6 @@
         justify-content: center;
       }
       .ladder-controls__field:has(> button) { flex: 1 1 100%; }
-      .ladder-controls__field:has(> button) .effective-speed-note:empty { display: none; }
     }
   </style>
 </head>
@@ -818,8 +701,7 @@
     <h1 class="page-title">Speed ladder</h1>
     <p class="page-intro">
       Every Pokémon grouped by base Speed. Enter your Speed and your row slots into the ladder.
-      <span class="when-normal">Green cells are Pokémon you outspeed, orange cells are ties, white cells outspeed you.</span>
-      <span class="when-trick-room">Trick Room is on, so the ladder runs slowest first: green cells are Pokémon you move before, orange cells are ties, white cells move before you.</span>
+      Green cells are Pokémon you outspeed, orange cells are ties, white cells outspeed you.
     </p>
 
     <section class="panel" aria-label="Your Pokémon">
@@ -828,31 +710,28 @@
           <label for="ladder-your-speed-input">Your Pokémon’s Speed stat</label>
           <input id="ladder-your-speed-input" class="your-speed-input" type="number" min="1" max="999" value="150" inputmode="numeric">
         </div>
-        <div class="ladder-controls__field">
+        <div class="ladder-controls__field ladder-controls__field--modifier">
           <label for="ladder-your-modifier-select">Your modifier</label>
-          <select id="ladder-your-modifier-select"></select>
           <small id="ladder-effective-speed-note" class="effective-speed-note"></small>
+          <select id="ladder-your-modifier-select"></select>
         </div>
         <div class="ladder-controls__field">
           <label for="ladder-placement-select">Place my row by</label>
           <select id="ladder-placement-select"></select>
-          <small class="effective-speed-note"></small>
         </div>
         <div class="ladder-controls__field">
           <button id="ladder-jump-button" class="ladder-jump-button" type="button">Jump to my row</button>
-          <small class="effective-speed-note"></small>
         </div>
         <div class="ladder-controls__field">
           <button id="ladder-trick-room-button" class="trick-room-button" type="button" aria-pressed="false">
             <svg class="trick-room-button__icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></svg>
             Trick Room
           </button>
-          <small class="effective-speed-note"></small>
         </div>
       </div>
     </section>
 
-    <section class="filters" aria-label="Ladder filters and opponent settings" style="margin-top: 12px;">
+    <section class="filters" aria-label="Ladder filters and opponent settings">
       <div>
         <label for="ladder-search-input">Search Pokémon or type</label>
         <input id="ladder-search-input" type="search" placeholder="e.g. Garchomp, Fairy">
@@ -897,61 +776,6 @@
       </table>
     </div>
 
-    <section class="method" aria-labelledby="method-heading">
-      <h2 id="method-heading">Reading the ladder</h2>
-      <p class="method__lead">
-        Every value is a level 50 Speed stat. Each column shows the same Pokémon under a different set-up.
-      </p>
-
-      <div class="method__grid">
-        <div class="method-card">
-          <h3>Columns</h3>
-          <dl class="column-list">
-            <dt>Max+</dt>
-            <dd>32 Speed points with a +Speed nature</dd>
-            <dt>Max</dt>
-            <dd>32 Speed points with a neutral nature</dd>
-            <dt>No investment</dt>
-            <dd>0 Speed points with a neutral nature</dd>
-            <dt>Min</dt>
-            <dd>0 Speed points with a -Speed nature</dd>
-            <dt>Scarf Max+</dt>
-            <dd>Max+ with a Choice Scarf (×1.5)</dd>
-            <dt>Scarf Max</dt>
-            <dd>Max with a Choice Scarf (×1.5)</dd>
-            <dt>Custom</dt>
-            <dd>Follows the “Custom column” settings above the table</dd>
-          </dl>
-        </div>
-
-        <div class="method-card">
-          <h3>Cell colours</h3>
-          <ul class="legend">
-            <li>
-              <span class="legend__swatch legend__swatch--outspeed" aria-hidden="true"></span>
-              <span class="legend__text">
-                <strong>Green: you outspeed them</strong>
-                Your Pokémon moves first.
-              </span>
-            </li>
-            <li>
-              <span class="legend__swatch legend__swatch--tie" aria-hidden="true"></span>
-              <span class="legend__text">
-                <strong>Orange: a tie</strong>
-                Same Speed, so the order is decided at random.
-              </span>
-            </li>
-            <li>
-              <span class="legend__swatch" aria-hidden="true"></span>
-              <span class="legend__text">
-                <strong>White: they outspeed you</strong>
-                They move first.
-              </span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer class="site-footer page-container">
@@ -1667,43 +1491,6 @@
 
     setUpLadder();
     renderLadder();
-  </script>
-  <script>
-    /* ========================================================================
-       Horizontal scroll sliders
-       A slider above each wide table scrolls it sideways, so you don't have to
-       scroll to the bottom of a long table to find its scrollbar.
-       ====================================================================== */
-
-    function addHorizontalScrollSlider(scrollContainer) {
-      const sliderBar = document.createElement("div");
-      sliderBar.className = "table-slider-bar";
-      sliderBar.innerHTML = '<span>Scroll table</span><input type="range" min="0" value="0" step="1" aria-label="Scroll the table sideways">';
-      scrollContainer.before(sliderBar);
-      const slider = sliderBar.querySelector("input");
-
-      /** Matches the slider's range and position to the table, and hides it when everything fits. */
-      function updateSlider() {
-        const maxScrollDistance = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-        sliderBar.hidden = maxScrollDistance <= 0;
-        slider.max = Math.max(maxScrollDistance, 0);
-        slider.value = scrollContainer.scrollLeft;
-      }
-
-      slider.addEventListener("input", () => { scrollContainer.scrollLeft = Number(slider.value); });
-      scrollContainer.addEventListener("scroll", updateSlider);
-      window.addEventListener("resize", updateSlider);
-
-      // Also catches the table changing size (new rows, or its tab becoming visible)
-      if (typeof ResizeObserver !== "undefined") {
-        const resizeObserver = new ResizeObserver(updateSlider);
-        resizeObserver.observe(scrollContainer);
-        scrollContainer.querySelectorAll("table").forEach((table) => resizeObserver.observe(table));
-      }
-      updateSlider();
-    }
-
-    document.querySelectorAll(".table-scroll").forEach(addHorizontalScrollSlider);
   </script>
 </body>
 </html>
